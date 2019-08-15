@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             actionSave()
         }
         doObserver()
+        doObserverThumbnailStatus()
     }
 
     private fun doObserver() {
@@ -57,6 +58,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun doObserverThumbnailStatus() {
+        viewModel.getThumbnailStatus().observe(this, Observer {status ->
+            if (status == ThumbnailStatus.READY) {
+                iv_dua.setImageDrawable(iv_dua.drawable)
+            }
+        })
+    }
+
     private fun actionAdd() {
 //        viewModel.addPhotos(PhotoStore.photos[0])
         val addPhotoBottomDialogFragment = PhotosBottomDialogFragment.newInstance()
@@ -66,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     val drawable = resources.getDrawable(it.drawable, theme)
                     iv_dua.setImageDrawable(drawable)
                 }.addTo(selectedImagesDisposables)
-        viewModel.subscribeSelectedPhotos(addPhotoBottomDialogFragment.selectedPhotos)
+        viewModel.subscribeSelectedPhotos(addPhotoBottomDialogFragment)
     }
 
     private fun actionClear() {

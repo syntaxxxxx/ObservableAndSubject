@@ -13,6 +13,13 @@ import kotlinx.android.synthetic.main.layout_photo_bottom_sheet.*
 
 class PhotosBottomDialogFragment : BottomSheetDialogFragment(), PhotosAdapter.PhotoListener {
 
+  companion object {
+    const val TAG = "PhotosBottomDialogFragment"
+    fun newInstance(): PhotosBottomDialogFragment {
+      return PhotosBottomDialogFragment()
+    }
+  }
+
   private lateinit var viewModel: SharedViewModel
 
   private val selectedPhotosSubject = PublishSubject.create<Photo>()
@@ -48,12 +55,5 @@ class PhotosBottomDialogFragment : BottomSheetDialogFragment(), PhotosAdapter.Ph
 
   override fun photoClicked(photo: Photo) {
     selectedPhotosSubject.onNext(photo)
-  }
-
-  companion object {
-    const val TAG = "PhotosBottomDialogFragment"
-    fun newInstance(): PhotosBottomDialogFragment {
-      return PhotosBottomDialogFragment()
-    }
   }
 }
